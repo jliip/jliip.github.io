@@ -1,84 +1,44 @@
-body, html {
+body {
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    display: flex;
 }
 
 .container {
     display: flex;
-    max-width: 1200px;
-    margin: 0 auto;
+    width: 100%;
 }
 
-.profile, .projects {
-    background: #fff;
-    border-radius: 8px;
+.sidebar {
+    width: 25%;
+    background-color: #f4f4f4;
     padding: 20px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
-.profile {
-    flex: 1;
+.main-content {
+    width: 75%;
+    padding: 20px;
 }
 
-.avatar img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 4px solid #ddd;
-}
-
-.contact-info, .social-media {
-    margin-top: 20px;
-}
-
-.contact-info h2, .social-media h2 {
-    margin-bottom: 10px;
-}
-
-.projects {
-    flex: 3;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding-left: 20px;
+h2 {
+    color: #333;
 }
 
 .project {
-    display: flex;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
 }
 
-.project-image img {
-    width: 150px;
-    height: 150px;
-    border-radius: 4px;
+.project h3 {
+    margin: 0 0 10px 0;
 }
 
-.project-info {
-    margin-left: 20px;
-    flex: 1;
+.project a {
+    color: #007BFF;
+    text-decoration: none;
 }
 
-.project-info h3 {
-    margin: 0;
-    margin-bottom: 10px;
-}
-
-.project-info p {
-    margin: 0;
-}
-.project-info {
-    margin-left: 20px;
-}
-
-.project-info h3 {
-    margin: 0;
-    margin-bottom: 10px;
-}
-
-.project-info p {
-    margin: 0;
+.project a:hover {
+    text-decoration: underline;
 }
