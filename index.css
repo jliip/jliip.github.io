@@ -3,6 +3,8 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .container {
@@ -13,12 +15,13 @@ body {
 .sidebar {
     width: 25%;
     background-color: #f4f4f4;
-    padding: 20px;
+    padding: 80px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
 }
 
 .main-content {
-    width: 75%;
+    flex-grow: 1;
     padding: 20px;
 }
 
