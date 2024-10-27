@@ -1,0 +1,71 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.profile {
+    flex: 1;
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.avatar img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 4px solid #ddd;
+}
+
+.contact-info, .social-media {
+    margin-top: 20px;
+}
+
+.contact-info h2, .social-media h2 {
+    margin-bottom: 10px;
+}
+
+.projects {
+    flex: 3;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding-left: 20px;
+}
+
+.project {
+    flex: 1;
+    min-width: 300px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: flex;
+}
+
+.project-image img {
+    width: 100px;
+    height: 100px;
+    border-radius: 4px;
+}
+
+.project-info {
+    margin-left: 20px;
+}
+
+.project-info h3 {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.project-info p {
+    margin: 0;
+}
