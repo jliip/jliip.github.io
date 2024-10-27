@@ -10,12 +10,15 @@ body, html {
     margin: 0 auto;
 }
 
-.profile {
-    flex: 1;
+.profile, .projects {
     background: #fff;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.profile {
+    flex: 1;
 }
 
 .avatar img {
@@ -36,27 +39,37 @@ body, html {
 .projects {
     flex: 3;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 20px;
     padding-left: 20px;
 }
 
 .project {
-    flex: 1;
-    min-width: 300px;
-    background: #fff;
+    display: flex;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    display: flex;
 }
 
 .project-image img {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     border-radius: 4px;
 }
 
+.project-info {
+    margin-left: 20px;
+    flex: 1;
+}
+
+.project-info h3 {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.project-info p {
+    margin: 0;
+}
 .project-info {
     margin-left: 20px;
 }
