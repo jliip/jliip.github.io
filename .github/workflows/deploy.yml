@@ -28,17 +28,13 @@ jobs:
       with:
         node-version: '18'
         cache: 'npm'
-        cache-dependency-path: React/package-lock.json
+        cache-dependency-path: package-lock.json
         
     - name: Install dependencies
-      run: |
-        cd React
-        npm ci
+      run: npm ci
         
     - name: Build
-      run: |
-        cd React
-        npm run build
+      run: npm run build
         
     - name: Setup Pages
       uses: actions/configure-pages@v4
