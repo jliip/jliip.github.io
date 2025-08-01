@@ -1,8 +1,9 @@
 .blog-detail {
-  max-width: 800px;
+  max-width: 1000px; /* 从800px增加到1000px */
   margin: 0;
   padding: 20px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  position: relative; /* 为悬浮按钮提供定位上下文 */
 }
 
 .blog-detail-header {
@@ -10,26 +11,31 @@
 }
 
 .back-button {
-  background: transparent;
-  border: 1px solid #e5e7eb;
+  position: fixed;
+  bottom: 780px;
+  right: 180px;
+  background: #ffffff;
+  border: 1px solid #084cd4;
   padding: 12px 20px;
   cursor: pointer;
   font-size: 16px;
-  color: #6b7280;
+  color: #474b52;
   font-weight: 500;
   transition: all 0.2s ease;
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  border-radius: 6px;
-  margin-bottom: 20px;
+  border-radius: 50px; /* 更圆润的按钮 */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* 添加阴影 */
+  z-index: 1000; /* 确保在最上层 */
 }
 
 .back-button:hover {
   color: #2563eb;
   border-color: #2563eb;
   background-color: #f8fafc;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3); /* hover时的阴影效果 */
 }
 
 .loading, .error {
@@ -241,12 +247,15 @@
 @media (max-width: 768px) {
   .blog-detail {
     padding: 15px;
+    max-width: 100%; /* 移动端占满宽度 */
   }
   
   .back-button {
     padding: 10px 16px;
     font-size: 15px;
-    margin-bottom: 15px;
+    bottom: 20px;
+    right: 20px;
+    border-radius: 25px; /* 移动端稍微小一点的圆角 */
   }
   
   .blog-header {
