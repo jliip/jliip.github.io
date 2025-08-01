@@ -1,38 +1,45 @@
-// 示例博客数据索引文件
+// 博客数据索引文件 - 使用文件夹结构
 import { type BlogListItem } from '../../types/blog';
 
-export const blogIndex: BlogListItem[] = [
-  {
-    id: 'getting-started-react-typescript',
-    title: 'Getting Started with React and TypeScript',
-    excerpt: 'Learn how to set up a modern React project with TypeScript and best practices.',
-    date: '2024-01-15',
-    tags: ['React', 'TypeScript', 'Frontend'],
-    author: 'Li Jiayun',
-    readTime: 8,
-    featured: true,
-    slug: 'getting-started-react-typescript'
-  },
-  {
-    id: 'responsive-web-applications',
-    title: 'Building Responsive Web Applications',
-    excerpt: 'Tips and techniques for creating web applications that work on all devices.',
-    date: '2024-01-10',
-    tags: ['CSS', 'Responsive', 'Web Design'],
-    author: 'Li Jiayun',
-    readTime: 6,
-    featured: false,
-    slug: 'responsive-web-applications'
-  }
+// 所有博客文件夹的列表
+const blogSlugs = [
+  'getting-started-react-typescript',
+  'responsive-web-applications', 
+  'rdk-x5-tutorial'
 ];
 
 // 动态导入博客内容的函数
 export const loadBlogContent = async (slug: string): Promise<string> => {
   try {
-    const module = await import(`./${slug}/content.md?raw`);
-    return module.default;
+    console.log(`Attempting to load content for slug: ${slug}`);
+    
+    // 使用动态导入 - 尝试不同的导入方式
+    const contentModule = await import(/* @vite-ignore */ `./${slug}/content.md?raw`);
+    console.log('Content module loaded:', contentModule);
+    
+    // 检查不同的可能属性
+    if (contentModule.default) {
+      return contentModule.default;
+    } else if (typeof contentModule === 'string') {
+      return contentModule;
+    } else {
+      console.error('Unexpected content module structure:', contentModule);
+      return '';
+    }
   } catch (error) {
     console.error(`Failed to load blog content for ${slug}:`, error);
+    
+    // 备用方案：尝试fetch
+    try {
+      console.log(`Trying fetch for ${slug}`);
+      const response = await fetch(`/src/data/blogs/${slug}/content.md`);
+      if (response.ok) {
+        return await response.text();
+      }
+    } catch (fetchError) {
+      console.error('Fetch fallback also failed:', fetchError);
+    }
+    
     return '';
   }
 };
@@ -40,7 +47,7 @@ export const loadBlogContent = async (slug: string): Promise<string> => {
 // 获取博客元数据的函数
 export const getBlogMetadata = async (slug: string) => {
   try {
-    const module = await import(`./${slug}/metadata`);
+    const module = await import(/* @vite-ignore */ `./${slug}/metadata.ts`);
     return module.metadata;
   } catch (error) {
     console.error(`Failed to load blog metadata for ${slug}:`, error);
@@ -49,16 +56,29 @@ export const getBlogMetadata = async (slug: string) => {
 };
 
 // 导出所有博客的函数
-export const getAllBlogs = (): BlogListItem[] => {
-  return blogIndex.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+export const getAllBlogs = async (): Promise<BlogListItem[]> => {
+  const blogs: BlogListItem[] = [];
+  
+  for (const slug of blogSlugs) {
+    try {
+      const module = await import(/* @vite-ignore */ `./${slug}/metadata.ts`);
+      blogs.push(module.metadata);
+    } catch (error) {
+      console.error(`Failed to load metadata for ${slug}:`, error);
+    }
+  }
+  
+  return blogs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 };
 
 // 获取特色博客的函数
-export const getFeaturedBlogs = (): BlogListItem[] => {
-  return blogIndex.filter(blog => blog.featured);
+export const getFeaturedBlogs = async (): Promise<BlogListItem[]> => {
+  const allBlogs = await getAllBlogs();
+  return allBlogs.filter(blog => blog.featured);
 };
 
 // 根据标签筛选博客的函数
-export const getBlogsByTag = (tag: string): BlogListItem[] => {
-  return blogIndex.filter(blog => blog.tags.includes(tag));
+export const getBlogsByTag = async (tag: string): Promise<BlogListItem[]> => {
+  const allBlogs = await getAllBlogs();
+  return allBlogs.filter(blog => blog.tags.includes(tag));
 };

@@ -5,10 +5,10 @@ export interface BlogMetadata {
   excerpt: string;
   date: string;
   tags: string[];
-  author: string;
   readTime: number; // 预估阅读时间（分钟）
   featured: boolean;
   slug: string; // URL友好的标识符
+  originalUrl?: string; // 原文链接（如CSDN链接）
 }
 
 export interface BlogPost extends BlogMetadata {

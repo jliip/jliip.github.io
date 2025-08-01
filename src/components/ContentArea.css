@@ -70,11 +70,13 @@
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   background-color: #ffffff;
-  transition: box-shadow 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .blog-post:hover {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.1);
+  border-color: #d1d5db;
+  transform: translateY(-2px);
 }
 
 .post-title {
@@ -82,6 +84,15 @@
   font-weight: 600;
   color: #1f2937;
   margin-bottom: 0.5rem;
+}
+
+.post-title.clickable {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.post-title.clickable:hover {
+  color: #2563eb;
 }
 
 .post-date {
@@ -110,17 +121,33 @@
   border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 500;
+  border: 1px solid #dbeafe;
 }
 
 .read-more {
-  color: #2563eb;
+  color: #6b7280;
   font-weight: 500;
   text-decoration: none;
   font-size: 0.875rem;
+  display: inline-block;
+  padding: 8px 0;
+  transition: color 0.2s ease;
+  background: transparent;
+  cursor: pointer;
+  border: none;
 }
 
 .read-more:hover {
-  text-decoration: underline;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.read-more.csdn-link {
+  color: #6b7280;
+}
+
+.read-more.csdn-link:hover {
+  color: #2563eb;
 }
 
 /* Publications Styles */

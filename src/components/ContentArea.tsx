@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ContentArea.css';
+import { getAllBlogs } from '../data/blogs';
+import { type BlogListItem } from '../types/blog';
+import BlogDetail from './BlogDetail';
 
 interface TabItem {
   id: string;
@@ -55,29 +58,43 @@ const ContentArea: React.FC<ContentAreaProps> = ({
 
 // Blog Content Component
 const BlogContent: React.FC = () => {
-  const blogPosts = [
-    {
-      id: 1,
-      title: "Getting Started with React and TypeScript",
-      excerpt: "Learn how to set up a modern React project with TypeScript and best practices.",
-      date: "2024-01-15",
-      tags: ["React", "TypeScript", "Frontend"]
-    },
-    {
-      id: 2,
-      title: "Building Responsive Web Applications",
-      excerpt: "Tips and techniques for creating web applications that work on all devices.",
-      date: "2024-01-10",
-      tags: ["CSS", "Responsive", "Web Design"]
-    },
-    {
-      id: 3,
-      title: "State Management in Modern React",
-      excerpt: "Exploring different approaches to state management in React applications.",
-      date: "2024-01-05",
-      tags: ["React", "State Management", "Hooks"]
-    }
-  ];
+  const [blogPosts, setBlogPosts] = useState<BlogListItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedBlog, setSelectedBlog] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadBlogs = async () => {
+      try {
+        const blogs = await getAllBlogs();
+        setBlogPosts(blogs);
+      } catch (error) {
+        console.error('Failed to load blogs:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadBlogs();
+  }, []);
+
+  // 如果选择了博客，显示详情页面
+  if (selectedBlog) {
+    return (
+      <BlogDetail 
+        slug={selectedBlog} 
+        onBack={() => setSelectedBlog(null)} 
+      />
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="content-section">
+        <h2>Recent Blog Posts</h2>
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="content-section">
@@ -85,7 +102,12 @@ const BlogContent: React.FC = () => {
       <div className="blog-posts">
         {blogPosts.map((post) => (
           <article key={post.id} className="blog-post">
-            <h3 className="post-title">{post.title}</h3>
+            <h3 
+              className="post-title clickable" 
+              onClick={() => setSelectedBlog(post.slug)}
+            >
+              {post.title}
+            </h3>
             <p className="post-date">{new Date(post.date).toLocaleDateString()}</p>
             <p className="post-excerpt">{post.excerpt}</p>
             <div className="post-tags">
@@ -93,7 +115,23 @@ const BlogContent: React.FC = () => {
                 <span key={tag} className="tag">{tag}</span>
               ))}
             </div>
-            <a href="#" className="read-more">Read More →</a>
+            {post.originalUrl ? (
+              <a 
+                href={post.originalUrl} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="read-more csdn-link"
+              >
+                通过CSDN查看
+              </a>
+            ) : (
+              <button 
+                onClick={() => setSelectedBlog(post.slug)}
+                className="read-more"
+              >
+                阅读全文
+              </button>
+            )}
           </article>
         ))}
       </div>
