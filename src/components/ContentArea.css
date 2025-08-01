@@ -46,7 +46,8 @@
 
 .content-section {
   max-width: 800px;
-  margin: 0 auto;
+  margin: 0;
+  /* 移除auto margin，使内容左对齐 */
 }
 
 .content-section h2 {
