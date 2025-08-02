@@ -18,6 +18,7 @@ export const personalData: PersonalInfo = {
   title: "UG Student",
   email: "jliip@connect.ust.hk",
   location: "Hong Kong / Shenzhen",
+  avatarUrl: "https://github.com/jliip.png?size=200", // 直接使用GitHub头像URL
   bio: "Welcome to my personal website.",
   socialLinks: {
     github: "https://github.com/jliip",

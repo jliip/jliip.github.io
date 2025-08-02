@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { getBlogMetadata, loadBlogContent } from '../data/blogs';
+import { getBlogMetadata, loadBlogContent } from '../data/blogs/staticIndex';
 import { type BlogPost } from '../types/blog';
 import './BlogDetail.css';
 
@@ -38,15 +38,14 @@ const BlogDetail: React.FC<BlogDetailProps> = ({ slug, onBack }) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const loadBlogData = async () => {
+    const loadBlogData = () => {
       try {
         setLoading(true);
         setError(null);
         
-        const [metadata, content] = await Promise.all([
-          getBlogMetadata(slug),
-          loadBlogContent(slug)
-        ]);
+        // 改为同步调用
+        const metadata = getBlogMetadata(slug);
+        const content = loadBlogContent(slug);
 
         if (metadata) {
           setBlog({

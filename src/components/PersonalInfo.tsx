@@ -1,36 +1,17 @@
 import React from 'react';
 import './PersonalInfo.css';
-import { type PersonalInfo as PersonalInfoType, defaultPersonalData } from '../data/personalData';
-import { useGitHubAvatar } from '../hooks/useGitHubAvatar';
+import { personalData } from '../data/personalData';
 
-type PersonalInfoProps = Partial<PersonalInfoType>;
-
-const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
-  // 合并传入的props和默认数据
-  const data: PersonalInfoType = {
-    ...defaultPersonalData,
-    ...props,
-    socialLinks: {
-      ...defaultPersonalData.socialLinks,
-      ...props.socialLinks
-    }
-  };
-
+const PersonalInfo: React.FC = () => {
   const {
     name,
     title,
     email,
     location,
-    avatarUrl: fallbackAvatarUrl,
+    avatarUrl,
     bio,
     socialLinks
-  } = data;
-
-  // 使用GitHub头像Hook
-  const { avatarUrl, loading } = useGitHubAvatar(
-    socialLinks.github,
-    fallbackAvatarUrl
-  );
+  } = personalData;
 
   return (
     <div className="personal-info">
@@ -38,16 +19,13 @@ const PersonalInfo: React.FC<PersonalInfoProps> = (props) => {
         <img 
           src={avatarUrl} 
           alt={`${name}'s avatar`}
-          className={`avatar ${loading ? 'loading' : ''}`}
+          className="avatar"
           onError={(e) => {
-            // 如果GitHub头像加载失败，回退到默认头像
+            // 如果头像加载失败，使用默认头像
             const target = e.target as HTMLImageElement;
-            if (target.src !== fallbackAvatarUrl) {
-              target.src = fallbackAvatarUrl || '';
-            }
+            target.src = 'https://via.placeholder.com/200x200/4f46e5/ffffff?text=' + name.charAt(0);
           }}
         />
-        {loading && <div className="avatar-loading">加载中...</div>}
       </div>
       
       <div className="basic-info">

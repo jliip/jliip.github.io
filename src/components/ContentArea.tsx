@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './ContentArea.css';
-import { getAllBlogs } from '../data/blogs';
+import { getAllBlogs } from '../data/blogs/staticIndex';
 import { type BlogListItem } from '../types/blog';
 import BlogDetail from './BlogDetail';
 
@@ -63,9 +63,10 @@ const BlogContent: React.FC = () => {
   const [selectedBlog, setSelectedBlog] = useState<string | null>(null);
 
   useEffect(() => {
-    const loadBlogs = async () => {
+    const loadBlogs = () => {
       try {
-        const blogs = await getAllBlogs();
+        // 改为同步调用
+        const blogs = getAllBlogs();
         setBlogPosts(blogs);
       } catch (error) {
         console.error('Failed to load blogs:', error);
