@@ -22,14 +22,14 @@ const ContentArea: React.FC<ContentAreaProps> = ({
       content: <BlogContent />
     },
     {
-      id: 'publications',
-      label: 'Publications',
-      content: <PublicationsContent />
-    },
-    {
       id: 'projects',
       label: 'Projects',
       content: <ProjectsContent />
+    },
+    {
+      id: 'publications',
+      label: 'Publications',
+      content: <PublicationsContent />
     }
   ]
 }) => {
@@ -90,7 +90,7 @@ const BlogContent: React.FC = () => {
   if (loading) {
     return (
       <div className="content-section">
-        <h2>Recent Blog Posts</h2>
+        <h2>Tech & Thought</h2>
         <p>Loading...</p>
       </div>
     );
@@ -98,7 +98,7 @@ const BlogContent: React.FC = () => {
 
   return (
     <div className="content-section">
-      <h2>Recent Blog Posts</h2>
+      <h2>Tech & Thought</h2>
       <div className="blog-posts">
         {blogPosts.map((post) => (
           <article key={post.id} className="blog-post">
@@ -141,51 +141,20 @@ const BlogContent: React.FC = () => {
 
 // Publications Content Component
 const PublicationsContent: React.FC = () => {
-  const publications = [
-    {
-      id: 1,
-      title: "Machine Learning Approaches to Web Development",
-      authors: "Your Name, Co-Author Name",
-      journal: "Journal of Web Technologies",
-      year: "2024",
-      doi: "10.1000/journal.2024.001"
-    },
-    {
-      id: 2,
-      title: "Optimizing React Performance in Large Applications",
-      authors: "Your Name, Another Author",
-      journal: "Frontend Development Quarterly",
-      year: "2023",
-      doi: "10.1000/journal.2023.045"
-    },
-    {
-      id: 3,
-      title: "TypeScript Best Practices for Enterprise Applications",
-      authors: "Your Name",
-      journal: "Software Engineering Review",
-      year: "2023",
-      doi: "10.1000/journal.2023.123"
-    }
-  ];
-
   return (
     <div className="content-section">
       <h2>Publications</h2>
-      <div className="publications">
-        {publications.map((pub) => (
-          <div key={pub.id} className="publication">
-            <h3 className="pub-title">{pub.title}</h3>
-            <p className="pub-authors">{pub.authors}</p>
-            <p className="pub-journal">
-              <em>{pub.journal}</em>, {pub.year}
-            </p>
-            <p className="pub-doi">DOI: {pub.doi}</p>
-            <div className="pub-actions">
-              <a href="#" className="pub-link">View Paper</a>
-              <a href="#" className="pub-link">Citations</a>
-            </div>
+      <div className="blog-posts">
+        <article className="blog-post">
+          <h3 className="post-title">TBA</h3>
+          <p className="post-date">To Be Announced</p>
+          <p className="post-excerpt">
+            Publications will be updated here when available.
+          </p>
+          <div className="post-tags">
+            <span className="tag">Coming Soon</span>
           </div>
-        ))}
+        </article>
       </div>
     </div>
   );
@@ -193,63 +162,112 @@ const PublicationsContent: React.FC = () => {
 
 // Projects Content Component
 const ProjectsContent: React.FC = () => {
+  const [selectedProject, setSelectedProject] = useState<number | null>(null);
+  
   const projects = [
     {
       id: 1,
-      title: "Personal Website",
-      description: "A clean, responsive personal website built with React and TypeScript.",
-      technologies: ["React", "TypeScript", "CSS", "Vite"],
-      github: "https://github.com/username/personal-website",
-      demo: "https://yourname.github.io",
-      status: "Completed"
+      title: "FramTime! An online workflow system",
+      description: "Based on the ISDN3300 course, we developed a pixel art-style web application implementing a to-do list, timer, link-up feature, evil goose, and QQ Nóngchǎng. Collaborated with Vicky and Xinhan.",
+      technologies: ["Web Development", "JavaScript", "Pixel Art", "Collaborative"],
+      github: null, // 没有GitHub仓库
+      demo: "https://yunxinz.github.io/farm-time/"
     },
     {
       id: 2,
-      title: "Task Management App",
-      description: "A full-stack task management application with real-time updates.",
-      technologies: ["React", "Node.js", "MongoDB", "Socket.io"],
-      github: "https://github.com/username/task-app",
-      demo: "https://task-app-demo.com",
-      status: "In Progress"
+      title: "Personal Website",
+      description: "A clean, responsive personal website built with React and TypeScript. Features a modern design with blog functionality, project showcase, and publications section. Includes image loading optimization and responsive layout.",
+      technologies: ["React", "TypeScript", "CSS", "Vite", "Markdown"],
+      github: "https://github.com/jliip/jliip.github.io",
+      demo: "https://jliip.github.io"
     },
-    {
-      id: 3,
-      title: "Data Visualization Dashboard",
-      description: "Interactive dashboard for visualizing complex datasets.",
-      technologies: ["React", "D3.js", "Python", "Flask"],
-      github: "https://github.com/username/data-viz",
-      demo: "https://data-viz-demo.com",
-      status: "Completed"
-    }
   ];
+
+  // 如果选择了项目，显示详情页面（暂时显示简单信息）
+  if (selectedProject) {
+    const project = projects.find(p => p.id === selectedProject);
+    if (project) {
+      return (
+        <div className="content-section">
+          <button onClick={() => setSelectedProject(null)} className="back-button">
+            ← Back
+          </button>
+          <div className="blog-detail-content">
+            <div className="blog-header">
+              <h1 className="blog-title">{project.title}</h1>
+              <div className="blog-meta">
+                <span className="blog-date">Project Details</span>
+              </div>
+              <div className="blog-tags">
+                {project.technologies.map((tech) => (
+                  <span key={tech} className="blog-tag">{tech}</span>
+                ))}
+              </div>
+            </div>
+            <div className="blog-content">
+              <p>{project.description}</p>
+              <div style={{ marginTop: '2rem' }}>
+                <h3 style={{ fontSize: '1.125rem', fontWeight: '600', marginBottom: '1rem', color: '#1f2937' }}>
+                  Links
+                </h3>
+                {project.github && (
+                  <p style={{ marginBottom: '0.5rem' }}>
+                    <strong>GitHub: </strong>
+                    <a href={project.github} target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'none' }}>
+                      {project.github}
+                    </a>
+                  </p>
+                )}
+                <p style={{ marginBottom: '0.5rem' }}>
+                  <strong>Live Demo: </strong>
+                  <a href={project.demo} target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'none' }}>
+                    {project.demo}
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+  }
 
   return (
     <div className="content-section">
       <h2>Projects</h2>
-      <div className="projects">
+      <div className="blog-posts">
         {projects.map((project) => (
-          <div key={project.id} className="project">
-            <div className="project-header">
-              <h3 className="project-title">{project.title}</h3>
-              <span className={`status ${project.status.toLowerCase().replace(' ', '-')}`}>
-                {project.status}
-              </span>
-            </div>
-            <p className="project-description">{project.description}</p>
-            <div className="project-technologies">
+          <article key={project.id} className="blog-post">
+            <h3 
+              className="post-title clickable" 
+              onClick={() => setSelectedProject(project.id)}
+            >
+              {project.title}
+            </h3>
+            <p className="post-excerpt">{project.description}</p>
+            <div className="post-tags">
               {project.technologies.map((tech) => (
-                <span key={tech} className="tech-tag">{tech}</span>
+                <span key={tech} className="tag">{tech}</span>
               ))}
             </div>
-            <div className="project-links">
-              <a href={project.github} target="_blank" rel="noopener noreferrer" className="project-link">
-                GitHub
-              </a>
-              <a href={project.demo} target="_blank" rel="noopener noreferrer" className="project-link">
+            <div className="project-actions">
+              {project.github && (
+                <a href={project.github} target="_blank" rel="noopener noreferrer" className="read-more">
+                  GitHub
+                </a>
+              )}
+              <a href={project.demo} target="_blank" rel="noopener noreferrer" className="read-more csdn-link">
                 Live Demo
               </a>
+              <a 
+                onClick={() => setSelectedProject(project.id)}
+                className="read-more csdn-link"
+                style={{ cursor: 'pointer' }}
+              >
+                Detail
+              </a>
             </div>
-          </div>
+          </article>
         ))}
       </div>
     </div>

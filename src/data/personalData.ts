@@ -14,7 +14,7 @@ export interface PersonalInfo {
 
 // 个人信息数据
 export const personalData: PersonalInfo = {
-  name: "LI Jiayun",
+  name: "jliip",
   title: "UG Student",
   email: "jliip@connect.ust.hk",
   location: "Hong Kong / Shenzhen",
