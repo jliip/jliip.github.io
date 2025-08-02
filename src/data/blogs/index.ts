@@ -24,23 +24,11 @@ export const loadBlogContent = async (slug: string): Promise<string> => {
       return contentModule;
     } else {
       console.error('Unexpected content module structure:', contentModule);
-      return '';
+      return 'Content loading failed';
     }
   } catch (error) {
     console.error(`Failed to load blog content for ${slug}:`, error);
-    
-    // 备用方案：尝试fetch
-    try {
-      console.log(`Trying fetch for ${slug}`);
-      const response = await fetch(`/src/data/blogs/${slug}/content.md`);
-      if (response.ok) {
-        return await response.text();
-      }
-    } catch (fetchError) {
-      console.error('Fetch fallback also failed:', fetchError);
-    }
-    
-    return '';
+    return 'Content not available';
   }
 };
 

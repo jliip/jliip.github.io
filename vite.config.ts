@@ -14,6 +14,14 @@ export default defineConfig({
         chunkFileNames: 'assets/[name].[hash].js',
         assetFileNames: 'assets/[name].[hash].[ext]'
       }
+    },
+    // 确保所有资源都被正确复制
+    copyPublicDir: true
+  },
+  // 添加解析配置确保导入正确工作
+  resolve: {
+    alias: {
+      '@': '/src'
     }
   }
 })
