@@ -1,11 +1,5 @@
 import { useState, useEffect } from 'react';
 
-interface GitHubUser {
-  avatar_url: string;
-  name: string;
-  login: string;
-}
-
 /**
  * 从GitHub URL中提取用户名
  * 例如: "https://github.com/jliip" -> "jliip"
@@ -32,6 +26,7 @@ export const useGitHubAvatar = (githubUrl?: string, fallbackUrl?: string) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // 如果没有GitHub URL，直接使用fallback
     if (!githubUrl) {
       setAvatarUrl(fallbackUrl || '');
       return;
@@ -44,30 +39,25 @@ export const useGitHubAvatar = (githubUrl?: string, fallbackUrl?: string) => {
       return;
     }
 
-    const fetchGitHubAvatar = async () => {
-      setLoading(true);
-      setError(null);
-
-      try {
-        const response = await fetch(`https://api.github.com/users/${username}`);
-        
-        if (!response.ok) {
-          throw new Error(`GitHub API请求失败: ${response.status}`);
-        }
-
-        const userData: GitHubUser = await response.json();
-        setAvatarUrl(userData.avatar_url);
-      } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : '获取GitHub头像失败';
-        setError(errorMessage);
-        setAvatarUrl(fallbackUrl || '');
-        console.warn('获取GitHub头像失败:', errorMessage);
-      } finally {
-        setLoading(false);
-      }
+    // 直接使用GitHub的头像URL格式，避免API调用
+    // GitHub头像的直接URL格式：https://github.com/username.png
+    const directAvatarUrl = `https://github.com/${username}.png?size=200`;
+    
+    // 验证头像是否可以加载
+    const img = new Image();
+    img.onload = () => {
+      setAvatarUrl(directAvatarUrl);
+      setLoading(false);
     };
+    img.onerror = () => {
+      setError('GitHub头像加载失败');
+      setAvatarUrl(fallbackUrl || '');
+      setLoading(false);
+    };
+    
+    setLoading(true);
+    img.src = directAvatarUrl;
 
-    fetchGitHubAvatar();
   }, [githubUrl, fallbackUrl]);
 
   return { avatarUrl, loading, error };
