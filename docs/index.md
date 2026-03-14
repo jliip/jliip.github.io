@@ -1,14 +1,19 @@
 # About
 
-## Snapshot
+<img src="/avatar.png" alt="Avatar" width="200" height="200" style="border-radius:50%;" />
 
-- Role: _Your role_
-- Location: _City / Country_
+**You can call me jliip.**
 
-## Focus
+I create this for recording.
 
-- _Focus area 1_
-- _Focus area 2_
+## Bio
+
+- HKUST student
+- Location: HongKong & Shenzhen
+
+## Interest
+
+- Robotics
 
 ## Contact
 
