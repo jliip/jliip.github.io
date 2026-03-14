@@ -2,8 +2,11 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   lang: 'en-US',
-  title: 'Personal Lab Notes',
-  description: 'Minimal personal website for projects, blog, and research.',
+  title: 'jliip',
+  description: 'Personal website for projects, blog, and research.',
+  head: [
+    ['link', { rel: 'icon', href: '/avatar.png' }]
+  ],
   themeConfig: {
     nav: [
       { text: 'About', link: '/about' },

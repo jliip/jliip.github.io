@@ -51,3 +51,9 @@
 .VPFooter {
   border-top: 1px solid var(--vp-c-divider);
 }
+
+.VPSidebar {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - var(--vp-nav-height, 0px));
+}
